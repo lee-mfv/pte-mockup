@@ -1,0 +1,32 @@
+{
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "serve": "firebase serve --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "deployFunctionsWithToken": "firebase deploy --token=\"1/bq9Uah1ShbpKP3Gwwwqior4j-NdZCXg4OKuEkFDPtqyWJdXfWsH_yHWyZ8UVkLgO\" --project pte-mockup --only functions --non-interactive",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "10"
+  },
+  "dependencies": {
+    "camelcase": "^5.3.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "firebase-admin": "^8.0.0",
+    "firebase-functions": "^3.0.0",
+    "glob": "^7.1.4",
+    "jsonapi-serializer": "^3.6.4",
+    "moment": "^2.24.0",
+    "moment-timezone": "^0.5.26",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4"
+  },
+  "devDependencies": {
+    "firebase-functions-test": "^0.1.6"
+  },
+  "private": true
+}

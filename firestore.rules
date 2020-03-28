@@ -1,0 +1,31 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+  
+      match /fibrws/{fibrwId} {
+        allow read, write: if request.auth.uid != null
+      }
+
+      match /describe_images/{describeImageId} {
+        allow read, write: if request.auth.uid != null
+      }
+
+			match /blogs/{blogId} {
+        allow read, write: if request.auth.uid != null
+      }
+
+      match /images/{imageId} {
+        allow read, write: if request.auth.uid != null
+      }
+
+      match /data_logs/{dataLogId} {
+        allow read, write: if request.auth.uid != null
+      }
+
+    match /users/{userId}{
+    	allow create: if false
+      allow read: if request.auth.uid != null
+      allow write: if request.auth.uid == userId
+    }
+	}
+}

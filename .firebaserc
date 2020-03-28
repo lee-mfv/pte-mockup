@@ -1,0 +1,7 @@
+{
+  "projects": {
+    "default": "mfexpo-development",
+    "staging": "mfexpo-staging",
+    "production": "mfexpo-production"
+  }
+}

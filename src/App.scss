@@ -1,0 +1,104 @@
+button {
+  &.btn-flat {
+    color: #ffab40;
+    font-size: 14.5px;
+    height: auto;
+    line-height: 21.75px;
+  }
+}
+
+.section {
+  &.action-buttons {
+    margin-bottom: 50px;
+
+    a.btn {
+      margin-right: 10px;
+    }
+  }
+}
+
+.react-datepicker-popper {
+  .react-datepicker {
+    .react-datepicker-time__input {
+      font-size: 14px;
+    }
+  }
+}
+
+.collection-item {
+  &.sorting {
+    list-style-type: none;
+    cursor: move;
+    background-color: #FFFFFF;
+    border: 1px solid #f3f3f3;
+
+    img {
+      width: 42px;
+      height: 42px;
+    }
+  }
+}
+
+.collection {
+  background-color: #f3f3f3;
+  .collection-item {
+    &.sorting {
+      &:hover {
+        cursor: move;
+      }
+    }
+  }
+}
+
+.collection {
+  &.no-border {
+    border: none;
+  }
+
+  .card {
+    border: none;
+    box-shadow: none;
+
+    .card-action {
+      border: none;
+      padding: initial;
+    }
+  }
+}
+
+.page-login {
+  > .row {
+    margin-top: 90px;
+
+    @media (max-height: 667px) {
+      margin-top: 20px;
+    }
+  }
+}
+
+.pte-fibrw-detail {
+  .MuiFormGroup-root {
+    flex-direction: row;
+  }
+}
+
+.MuiGrid-root {
+  button.MuiButton-root {
+    margin-right: 20px;
+  }
+}
+
+.MuiInputBase-input {
+  &.pte-input-custom {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.42);
+    border-color: #D2D2D2 !important;
+    border-width: 1px !important;
+    margin-bottom: 10px;
+  }
+}
+
+//.pte-text-to-speech-block {
+//  .CustomInput-formControl-219 {
+//    margin: 0;
+//  }
+//}

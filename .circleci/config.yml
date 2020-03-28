@@ -1,0 +1,126 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:8.12.0
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+      - run:
+          name: Install project dependencies
+          command: npm install
+      - run:
+          name: Install project dependencies for firebase functions
+          command: cd functions && npm install
+      - run:
+          name: Setup env
+          command: |
+            case $CIRCLE_BRANCH in
+                "staging")
+                    export NODE_ENV="staging"
+                    cp .env.stag .env
+                    ;;
+                "master")
+                    export NODE_ENV="production"
+                    cp .env.prod .env
+                    ;;
+                "develop")
+                    export NODE_ENV="development"
+                    cp .env.dev .env
+                    ;;
+            esac
+            cat .env
+
+      - run:
+          name: Run build app
+          command: npm run build
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+      - store_artifacts:
+          path: /dist
+
+      - persist_to_workspace:
+          root: ~/repo
+          paths:
+            - node_modules
+            - src
+            - build
+            - functions
+            - firebase.json
+            - firestore.rules
+            - firestore.indexes.json
+            - storage.rules
+
+  deploy_dev:
+    docker:
+      - image: circleci/node:8.12.0
+    working_directory: ~/repo
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Add firebase tools
+          command: npm install firebase-tools
+      - run:
+          name: Deploy hosting
+          command: ./node_modules/.bin/firebase deploy --token="$FIREBASE_TOKEN" --project mfexpo-development --non-interactive
+
+  deploy_stage:
+    docker:
+      - image: circleci/node:8.12.0
+    working_directory: ~/repo
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Add firebase tools
+          command: npm install firebase-tools
+      - run:
+          name: Deploy hosting
+          command: ./node_modules/.bin/firebase deploy --token="$FIREBASE_TOKEN" --project mfexpo-staging --non-interactive
+
+  deploy_prod:
+    docker:
+      - image: circleci/node:8.12.0
+    working_directory: ~/repo
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Add firebase tools
+          command: npm install firebase-tools
+      - run:
+          name: Deploy hosting
+          command: ./node_modules/.bin/firebase deploy --token="$FIREBASE_TOKEN" --project mfexpo-production --non-interactive
+
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - build
+      - deploy_dev:
+          filters:
+            branches:
+              only: develop
+          requires:
+            - build
+      - deploy_stage:
+          filters:
+            branches:
+              only: staging
+          requires:
+            - build
+      - deploy_prod:
+          filters:
+            branches:
+              only: master
+          requires:
+            - build
