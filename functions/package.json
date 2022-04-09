@@ -20,7 +20,7 @@
     "firebase-functions": "^3.0.0",
     "glob": "^7.1.4",
     "jsonapi-serializer": "^3.6.4",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "moment-timezone": "^0.5.26",
     "request": "^2.88.0",
     "request-promise": "^4.2.4"
